@@ -236,7 +236,9 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            cd backend
+            #cd backend
+            #npm install
+            cd ~/project/backend
             #npm audit fix --force --audit-level=critical
             #npm audit fix --force --audit-level=critical
             #npm audit fix --force --audit-level=critical
