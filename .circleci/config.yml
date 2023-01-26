@@ -8,6 +8,7 @@ commands:
         event: fail
         channel: ci-cd-autodeploy-project 
         template: basic_fail_1
+
   install_awscli:
    description: install AWS CLI
    steps:
@@ -210,6 +211,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
+      - install_awscli
       - install_ansible
       - add_ssh_keys:
           fingerprints:
