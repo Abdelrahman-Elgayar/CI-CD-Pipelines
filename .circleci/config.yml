@@ -240,6 +240,9 @@ jobs:
             npm audit fix --force --audit-level=critical
             npm audit fix --force --audit-level=critical
             npm audit fix --force --audit-level=critical
+            npm cache clean --force
+            rm -rf node_modules
+            rm package-lock.json && rm npm-shrinkwrap.json
             npm install
             npm audit fix --force --audit-level=critical
             npm audit fix --force --audit-level=critical
