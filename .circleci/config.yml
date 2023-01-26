@@ -239,8 +239,13 @@ jobs:
             cd backend
             npm audit fix --force --audit-level=critical
             npm audit fix --force --audit-level=critical
+            npm audit fix --force --audit-level=critical
             npm install
+            npm audit fix --force --audit-level=critical
+            npm audit fix --force --audit-level=critical
             npm run migrations > migrations_dump.txt
+            npm audit fix --force --audit-level=critical
+            npm audit fix --force --audit-level=critical
       - run:
           name: Send migration results to kvdb
           command: |
