@@ -217,8 +217,7 @@ jobs:
           fingerprints:
              ["c1:43:0e:c5:1d:82:d6:b4:8f:31:a6:92:49:bc:00:c3"]
       - attach_workspace:
-          #at: ~/
-          at: G:\My Data\Desktop\FWD\CI-CD pipelines\
+          at: ~/
       - run:
           name: Configure server
           command: |
