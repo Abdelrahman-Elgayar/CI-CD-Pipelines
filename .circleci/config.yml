@@ -41,9 +41,9 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
-            aws s3 rm s3://udapeople-<< parameters.Workflow_ID >>  --recursive
-            aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
+            aws cloudformation delete-stack --stack-name CI-CD-Pipelines-backend-<< parameters.Workflow_ID >>
+            aws s3 rm s3://ci-cd-<< parameters.Workflow_ID >>  --recursive
+            aws cloudformation delete-stack --stack-name CI-CD-Pipelines-frontend-<< parameters.Workflow_ID >>
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -215,7 +215,7 @@ jobs:
       - install_ansible
       - add_ssh_keys:
           fingerprints:
-             ["c1:43:0e:c5:1d:82:d6:b4:8f:31:a6:92:49:bc:00:c3"]
+             ["62:3e:9c:b7:b1:1d:c9:d5:32:97:f6:49:43:e7:ec:88"]
       - attach_workspace:
           at: ~/
       - run:
@@ -236,21 +236,23 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            #cd backend
-            #npm install
-            cd ~/project/backend
-            #npm audit fix --force --audit-level=critical
-            #npm audit fix --force --audit-level=critical
-            #npm audit fix --force --audit-level=critical
-            #npm cache clean --force
-            #rm -rf node_modules
-            #rm package-lock.json 
+            cd backend
             npm install
-            #npm audit fix --force --audit-level=critical
-            #npm audit fix --force --audit-level=critical
             npm run migrations > migrations_dump.txt
-            #npm audit fix --force --audit-level=critical
-            #npm audit fix --force --audit-level=critical
+
+            # cd ~/project/backend
+            # npm audit fix --force --audit-level=critical
+            # npm audit fix --force --audit-level=critical
+            # npm audit fix --force --audit-level=critical
+            # npm cache clean --force
+            # rm -rf node_modules
+            # rm package-lock.json 
+            # npm install
+            # npm audit fix --force --audit-level=critical
+            # npm audit fix --force --audit-level=critical
+            # npm run migrations > migrations_dump.txt
+            # npm audit fix --force --audit-level=critical
+            # npm audit fix --force --audit-level=critical
       - run:
           name: Send migration results to kvdb
           command: |
