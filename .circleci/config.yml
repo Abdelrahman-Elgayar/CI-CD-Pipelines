@@ -251,7 +251,7 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            cd backend-app
+            cd backend
             npm install
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
