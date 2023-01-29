@@ -83,7 +83,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-dependencies]
+            keys:
+            - frontend-deps-{{ checksum "frontend/package-lock.json" }}
+          # keys: [frontend-dependencies]
       - run:
           name: Build front-end
           command: |
@@ -92,7 +94,8 @@ jobs:
             npm run build
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-dependencies
+          key: frontend-deps-{{ checksum "frontend/package-lock.json" }}
+          #key: frontend-dependencies
       - notify_on_failure
 
   build-backend:
@@ -101,7 +104,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-dependencies]
+          #keys: [backend-dependencies]
+          keys:
+            - backend-deps-{{ checksum "backend/package-lock.json" }}
       - run:
           name: Back-end build
           command: |
@@ -110,7 +115,8 @@ jobs:
             npm run build
       - save_cache:
           paths: [backend/node_modules]
-          key: backend-dependencies
+          #key: backend-dependencies
+          key: backend-deps-{{ checksum "backend/package-lock.json" }}
       - notify_on_failure
 
   test-frontend:
@@ -119,13 +125,16 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-dependencies]
+          #keys: [frontend-dependencies]
+          keys:
+           - frontend-deps-{{ checksum "frontend/package-lock.json" }}
       - run:
           name: front end unit test
           command: |
             cd frontend
             npm install
-            npm test
+            #npm test
+            npm run test
       - notify_on_failure
                 
   test-backend:
@@ -134,13 +143,16 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-dependencies]
+          #keys: [backend-dependencies]
+          keys:
+            - backend-deps-{{ checksum "backend/package-lock.json" }}
       - run:
           name: back end unit test
           command: |
             cd backend
             npm install
-            npm test
+            #npm test
+            npm run test
       - notify_on_failure
             
   scan-frontend:
@@ -149,7 +161,9 @@ jobs:
     steps:
       - checkout 
       - restore_cache:
-          keys: [frontend-dependencies]
+          #keys: [frontend-dependencies]
+          keys:
+            - frontend-deps-{{ checksum "frontend/package-lock.json" }}
       - run:
           name: front end vulnerability scan
           command: |
@@ -166,7 +180,9 @@ jobs:
     steps:
       - checkout 
       - restore_cache:
-          keys: [backend-dependencies]
+          #keys: [backend-dependencies]
+          keys:
+            - backend-deps-{{ checksum "backend/package-lock.json" }}
       - run:
           name: back end vulnerability scan
           command: |
@@ -179,7 +195,7 @@ jobs:
 
   deploy-infrastructure:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/python:3.10
     steps:
       - checkout
       - install_awscli
@@ -220,11 +236,12 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/python:3.10
     steps:
       - checkout
       - install_awscli
       - install_ansible
+      - install_nodejs
       - add_ssh_keys:
           fingerprints:
              ["62:3e:9c:b7:b1:1d:c9:d5:32:97:f6:49:43:e7:ec:88"]
