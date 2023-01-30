@@ -273,19 +273,6 @@ jobs:
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
 
-            # cd ~/project/backend
-            # npm audit fix --force --audit-level=critical
-            # npm audit fix --force --audit-level=critical
-            # npm audit fix --force --audit-level=critical
-            # npm cache clean --force
-            # rm -rf node_modules
-            # rm package-lock.json 
-            # npm install
-            # npm audit fix --force --audit-level=critical
-            # npm audit fix --force --audit-level=critical
-            # npm run migrations > migrations_dump.txt
-            # npm audit fix --force --audit-level=critical
-            # npm audit fix --force --audit-level=critical
       - run:
           name: Send migration results to kvdb
           command: |
